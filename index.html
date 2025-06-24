@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
+      crossorigin="anonymous"
+    />
+    <link href="main.css" rel="stylesheet" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- login modal -->
+    <div class="black-bg">
+      <div class="white-bg">
+        <h4>로그인하세요</h4>
+        <form action="success.html">
+          <div class="my-3">
+            <input type="text" class="form-control" id="email" />
+          </div>
+          <div class="my-3">
+            <input type="password" class="form-control" id="pw" />
+          </div>
+          <button type="submit" class="btn btn-primary" id="send">전송</button>
+          <button type="button" class="btn btn-danger" id="close">닫기</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand">JSShop</span>
+        <div class="progress-line-bg">
+          <div class="progress-line"></div>
+        </div>
+        <span class="badge bg-dark">Dark 🔄</span>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+
+    <!--nav list -->
+    <ul class="list-group">
+      <li class="list-group-item">An item</li>
+      <li class="list-group-item">A second item</li>
+      <li class="list-group-item">A third item</li>
+      <li class="list-group-item">A fourth item</li>
+      <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+    <div class="main-bg">
+      <h4>Shirts on Sale</h4>
+      <button id="login" class="btn btn-danger">로그인</button>
+    </div>
+
+    <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll; background-color: #ccc">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum illum iure, minus eius expedita recusandae, et illo
+      dolore veniam non necessitatibus culpa amet, provident autem vel tempora quibusdam totam blanditiis.
+    </div>
+
+    <div style="height: 1000px"></div>
+
+    <!-- <p>태조 이성계가 태어난 년도는?</p>
+    <input type="text" id="answer" />
+    <button id="send-answer">제출</button> -->
+    <!-- <div class="alert alert-danger"><span class="time">5</span>초 이내 구매시 사은품 증정!</div> -->
+
+    <div style="overflow: hidden">
+      <div class="slide-container">
+        <div class="slide-box">
+          <img src="car1.png" />
+        </div>
+        <div class="slide-box">
+          <img src="car2.png" />
+        </div>
+        <div class="slide-box">
+          <img src="car3.png" />
+        </div>
+      </div>
+    </div>
+
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="next">다음</button>
+    <button class="before">이전</button>
+
+    <script>
+      // 검은 배경 클릭 시, 모달 닫히도록
+      document.getElementsByClassName("black-bg")[0].addEventListener("click", function (e) {
+        if (e.target == document.getElementsByClassName("black-bg")[0]) {
+          document.getElementsByClassName("black-bg")[0].classList.remove("show-modal");
+        }
+      });
+      // 숙제 1. 스크롤바를 100px 이상 내리면 로고 폰트사이즈를 작게 만들어오십시오. 단, 100px 미만으로 내리면 로고 폰트사이즈를 크게 만들어옵시다.
+      window.addEventListener("scroll", function () {
+        if (window.scrollY >= 100) {
+          $(".navbar-brand").css("font-size", "20px");
+        } else {
+          $(".navbar-brand").css("font-size", "25px");
+        }
+      });
+
+      // 숙제 2. 회원약관 박스를 거의 끝까지 스크롤하면 alert를 띄워줍시다.
+      $(".lorem").on("scroll", function () {
+        // div의 스크롤바 내린 양 + 눈에 보이는 div 높 == div의 실제 높이
+        var 스크롤양 = document.querySelector(".lorem").scrollTop;
+        var 실제높이 = document.querySelector(".lorem").scrollHeight;
+        var 높이 = document.querySelector(".lorem").clientHeight;
+
+        if (실제높이 - 스크롤양 <= 높이 + 10 && 실제높이 - 스크롤양 >= 높이) {
+          alert("회원약관 다읽었네?");
+        }
+        console.log(스크롤양, 실제높이);
+      });
+
+      // 응용 문제. 페이지 내릴 때마다 페이지를 얼마나 읽었는지 진척도를 알려주는 UI
+      // 페이지를 1% 읽었을 경우 div 박스 길이 1%
+      // 페이지를 50% 읽었을 경우 div 박스 길이 50%
+      // 페이지를 100% 읽었을 경우 div 박스 길이 100%
+      $(window).on("scroll", function () {
+        const 스크롤양 = document.querySelector("html").scrollTop;
+        const 실제높이 = document.querySelector("html").scrollHeight;
+        const 보이는높이 = document.querySelector("html").clientHeight;
+        const 퍼센트 = (스크롤양 / (실제높이 - 보이는높이)) * 100;
+        console.log(스크롤양, 실제높이 - 보이는높이, 퍼센트);
+
+        $(".progress-line").css("width", 퍼센트 + "%");
+      });
+
+      // function vat(a) {
+      //   var num = (a * 1.1).toFixed(2);
+      //   return parseFloat(num);
+      // }
+      // console.log(vat(55555));
+      function changeTime(a, b) {
+        atoSec = a * 60;
+        res = (atoSec + b) * 1000;
+        return console.log(res);
+      }
+
+      function purchase(a, b) {
+        var disTen = parseFloat(a - a * 0.1).toFixed();
+        var Total;
+        if (b == true) {
+          Total = disTen - 1.5;
+        } else {
+          Total = disTen;
+        }
+
+        return Total;
+      }
+
+      console.log(purchase(10, true));
+
+      var 지금사진 = 1;
+      var 이전사진 = 3;
+
+      // $(".next").on("click", function () {
+      //   if (지금사진 == 1) {
+      //     $(".slide-container").css("transform", "translateX(-100vw)");
+      //     지금사진 += 1;
+      //   } else if (지금사진 == 2) {
+      //     $(".slide-container").css("transform", "translateX(-200vw)");
+      //     지금사진 += 1;
+      //   }
+      // });
+
+      $(".next").on("click", function () {
+        $(".slide-container").css("transform", "translateX(-" + 지금사진 + "00vw)");
+        지금사진 += 1;
+      });
+
+      $(".before").on("click", function () {
+        if (이전사진 == 3) {
+          $(".slide-container").css("transform", "translateX(-100vw)");
+          이전사진 -= 1;
+        } else if (이전사진 == 2) {
+          $(".slide-container").css("transform", "translateX(0vw)");
+          이전사진 -= 1;
+        }
+      });
+
+      $(".slide-1").on("click", function () {
+        $(".slide-container").css("transform", "translateX(0vw)");
+      });
+      $(".slide-2").on("click", function () {
+        $(".slide-container").css("transform", "translateX(-100vw)");
+      });
+      $(".slide-3").on("click", function () {
+        $(".slide-container").css("transform", "translateX(-200vw)");
+      });
+
+      //
+
+      // 1초마다 span 글자 하나씩 감소하도록
+      // span 글자가 0이 되면 div 박스 삭제
+      // var i = Number(document.getElementsByClassName("time")[0].innerHTML);
+
+      // setInterval(function () {
+      //   i -= 1;
+      //   document.getElementsByClassName("time")[0].innerHTML = i;
+      //   if (i <= 0) {
+      //     $(".alert").hide();
+      //   }
+      // }, 1000);
+
+      // setTimeout(deleteDiv, i);
+
+      // function deleteDiv() {
+      //   $('.alert').hide();
+      // }
+
+      // const timeLeft = document.getElementsByClassName('.time')[0].value
+
+      // var answerCount = 0;
+
+      // document.getElementById("send-answer").addEventListener("click", function () {
+      //   answerCount += 1;
+      //   console.log(answerCount);
+      //   if (document.getElementById("answer").value == 1335) {
+      //     alert("성공");
+      //   } else if (answerCount == 3) {
+      //     alert("멍청아");
+      //   }
+      // });
+
+      // 첫 예금액이 5만원 미만이면 이율이 연 15퍼센트
+      // 첫 예금액이 5만원 이상이면 이율이 연 20퍼센트
+
+      // var 예금액 = 60000;
+      // var 미래예금액 = 0;
+
+      // if (예금액 >= 50000) {
+      //   미래예금액 = 예금액 * 1.2 * 1.2;
+      // } else if (예금액 < 50000) {
+      //   미래예금액 = 예금액 * 1.15 * 1.15;
+      // }
+
+      // console.log(미래예금액);
+
+      // var first = 360;
+
+      // var second = (first * 2) / 3;
+      // var third = (second * 2) / 3;
+
+      // console.log(first + second + third);
+
+      var count = 0;
+
+      $(".badge").on("click", function () {
+        count += 1;
+        console.log(count);
+        // 홀수면 내부 글자를 Light, 짝수면 내부 글자를 Dark
+        if (count % 2 == 1) {
+          // $('.badge').html('Light');
+          document.getElementsByClassName("badge")[0].innerHTML = "Light";
+        } else if (count % 2 == 0) {
+          // $('.badge').html('Dark');
+          document.getElementsByClassName("badge")[0].innerHTML = "Dark";
+        }
+      });
+
+      // 전송 버튼 누르면
+      // 저기 input에 입력한 값이 공백이면 알림창 띄워주세요~
+      $("form").on("submit", function (e) {
+        var 아이디입력한값 = document.getElementById("email").value;
+        var 비번입력한값 = document.getElementById("pw").value;
+        if (아이디입력한값 == "") {
+          alert("아이디입력안함");
+          e.preventDefault();
+        } else if (비번입력한값 == "") {
+          alert("비번입력안함");
+          e.preventDefault();
+        } else if (비번입력한값.length < 6) {
+          alert("비번너무짧음");
+          e.preventDefault();
+        }
+
+        if (!/\S+@\S+\.\S+/.test(아이디입력한값)) {
+          alert("이메일형식아님");
+          e.preventDefault();
+        }
+
+        if (!/A-Z/.test(비번입력한값)) {
+          alert("비번형식맞추셈(영문대문자포함)");
+          e.preventDefault();
+        }
+      });
+
+      // function 삼육구게임(i) {
+      //   // 만약 a가 3의 배수이면
+      //   // 콘솔창에 박수라는 글자를 띄우자
+      //   if (i % 10 == 3 || i % 10 == 6 || i % 10 == 9) {
+      //     console.log("박수");
+      //   } else {
+      //     console.log("통과");
+      //   }
+      // }
+
+      // 삼육구게임(5);
+
+      // function 합격했냐(a, b) {
+      //   if (a < 0 || a > 100 || b < 0 || b > 100 || isNaN(a) || isNaN(b)) {
+      //     console.log("장난치지마셈");
+      //   } else if (a < 40 || b < 40) {
+      //     console.log("불합격");
+      //   } else if (a + b < 120) {
+      //     console.log("불합격");
+      //   } else {
+      //     console.log("합격");
+      //   }
+      // }
+
+      // 합격했냐("d", 50);
+
+      $("#login").on("click", function () {
+        $(".black-bg").addClass("show-modal");
+      });
+
+      $("#close").on("click", function () {
+        $(".black-bg").removeClass("show-modal");
+      });
+
+      document.querySelector(".navbar-toggler").addEventListener("click", function () {
+        document.querySelectorAll(".list-group")[0].classList.toggle("show");
+      });
+    </script>
+  </body>
+</html>
