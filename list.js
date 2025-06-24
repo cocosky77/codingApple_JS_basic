@@ -15,15 +15,6 @@ document.querySelector("#price").addEventListener("click", function () {
   addCard(products);
 });
 
-// 브라우저 안에 몰래 데이터 저장하는 application
-var arr = [1, 2, 3];
-var newArr = JSON.stringify(arr);
-
-localStorage.setItem("num", newArr);
-var 꺼낸거 = localStorage.getItem("num");
-
-console.log(JSON.parse(꺼낸거)[0]);
-
 // 카드 섹션 함수
 function divCard(item) {
   // row 하위에 박스 3개 추가하는 반복문
@@ -116,4 +107,24 @@ document.querySelector("#less6").addEventListener("click", function () {
   // html 비우고 다시 정렬
   document.querySelector(".row").innerHTML = "";
   addCard(less6Pro);
+});
+
+// 브라우저 안에 몰래 데이터 저장하는 application
+// var arr = [1, 2, 3];
+// var newArr = JSON.stringify(arr);
+
+// localStorage.setItem("num", newArr);
+// var 꺼낸거 = localStorage.getItem("num");
+
+// console.log(JSON.parse(꺼낸거)[0]);
+
+// 장바구니 숙제 1. 카드하단 구매버튼 클릭하면 누른 상품의 이름을 localStorage에 저장하기
+// 이벤트를 버튼에 걸게되면 한 개만 선택하게 되니까 빡셈 --> 상위 요소인 .row에 걸자!
+document.querySelector(".row").addEventListener("click", function (e) {
+  // 버튼 클릭한 카드의 타이틀을 찾기!
+  var selectedCardName = e.target.closest(".col-sm-4").querySelector("h5").innerHTML;
+  // 로컬스토리지에 저장할 이름 배열
+  var storageCardList = [selectedCardName];
+  var storageCardName = JSON.stringify(storageCardList);
+  localStorage.setItem("card", storageCardName);
 });
