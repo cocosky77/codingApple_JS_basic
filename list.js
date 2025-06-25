@@ -119,12 +119,35 @@ document.querySelector("#less6").addEventListener("click", function () {
 // console.log(JSON.parse(꺼낸거)[0]);
 
 // 장바구니 숙제 1. 카드하단 구매버튼 클릭하면 누른 상품의 이름을 localStorage에 저장하기
-// 이벤트를 버튼에 걸게되면 한 개만 선택하게 되니까 빡셈 --> 상위 요소인 .row에 걸자!
+// 이벤트를 .buy에 걸게되면 한 개만 선택하게 되니까 빡셈 --> 상위 요소인 .row에 걸자!
 document.querySelector(".row").addEventListener("click", function (e) {
   // 버튼 클릭한 카드의 타이틀을 찾기!
   var selectedCardName = e.target.closest(".col-sm-4").querySelector("h5").innerHTML;
-  // 로컬스토리지에 저장할 이름 배열
-  var storageCardList = [selectedCardName];
-  var storageCardName = JSON.stringify(storageCardList);
-  localStorage.setItem("card", storageCardName);
+  // 만약 storageCardList에 값이 없다면 데이터를 처음 추가하고
+  if (localStorage.getItem("cart") == null) {
+    // 로컬스토리지에 저장할 이름 배열
+    var storageCardList = [selectedCardName];
+    // 로컬스토리지에 저장할 이름 배열 JSON형식으로 변환
+    var storageCard = JSON.stringify(storageCardList);
+    // 로컬스토리지에 cart라는 key로 데이터를 value에 저장
+    localStorage.setItem("cart", storageCard);
+  } else {
+    // 만약 storageCardList에 값이 있다면 데이터를 기존 데이터 뒤에 추가하기
+    // 로컬스토리지에서 데이터 꺼내기
+    var outCard = localStorage.getItem("cart");
+    // 로컬스토리지에서 꺼낸 데이터 JSON형식 제거
+    var outCardList = JSON.parse(outCard);
+    // 콘솔창에 출력
+    console.log(outCardList);
+    // 꺼낸 데이터 뒤에 현재 데이터를 쉼표로 추가하기
+    // 기존 데이터와 현재 데이터 배열 병합할 때 사용할 변수
+    var newCardList = outCardList.concat(selectedCardName);
+    // 콘솔창에 출력
+    console.log(newCardList);
+    // 병합한 배열을 로컬스토리지에 새롭게 저장하여 덮어쓰기
+    var newCard = JSON.stringify(newCardList);
+    console.log(newCard);
+    localStorage.removeItem("cart", storageCard);
+    localStorage.setItem("cart", newCard);
+  }
 });
